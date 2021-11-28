@@ -14,7 +14,7 @@ const users = [
 // if user is female add profession:'actor' 
 
 const userupdated1 = users.map( x => { 
-    let result = x.gender == 'Male' ? {...x, profession: 'Cricketer'} : {...x, profession: 'actor'}
+    const result = x.gender == 'Male' ? {...x, profession: 'Cricketer'} : {...x, profession: 'actor'}
     return result
 })
 
