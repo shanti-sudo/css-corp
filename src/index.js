@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import User from './task_shanti';
+import Todo from './Pages/Todo';
+import './root.css';
 
 // Components
 // 1. function components
@@ -39,12 +39,4 @@ import User from './task_shanti';
 //   }
 // }
 
-ReactDOM.render(
-  <div>
-    <h1>Hello from React</h1>
-    <input type="checkbox" />
-    <App title="Good Morning" />
-    <User firstname="Shanti" lastname="M" />
-  </div>,
-  document.getElementById('root'),
-);
+ReactDOM.render(<Todo />, document.getElementById('root'));
