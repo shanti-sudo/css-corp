@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Todo from './Pages/Todo';
+//import Todo from './Pages/Todo';
+import Todo from './Weather/Todo';
 import './root.css';
 
 // Components

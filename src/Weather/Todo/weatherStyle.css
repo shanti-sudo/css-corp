@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #fafafa;
+  }
+  
+  .container > h1 {
+    text-align: center;
+    margin: 1rem 0;
+  }
+
+  .container > .todo-list {
+    flex-grow: 1;
+    overflow: auto;
+  }
+  
+  .container > .todo-list > .todo-item {
+    display: flex;
+    align-items: center;
+    margin: 1rem;
+  }
