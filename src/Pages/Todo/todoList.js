@@ -1,17 +1,29 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import TodoItem from './TodoItem';
+import { ThemeContext } from '../../context/themeContext';
 
-const TodoList = ({ todoList, toggleComplete, deleteTodo }) => {
+const TodoList = ({ todoList, toggleComplete, deleteTodo, httpStatus }) => {
   console.log('TodoList render');
   return (
     <div className="flex-1">
+      <ThemeContext.Consumer>
+        {({ theme, toggleTheme }) => (
+          <div>
+            <p>{theme}</p>
+            <button type="button" onClick={toggleTheme}>
+              Change Theme
+            </button>
+          </div>
+        )}
+      </ThemeContext.Consumer>
       {todoList.map((item) => (
         <TodoItem
           key={item.id}
           item={item}
           toggleComplete={toggleComplete}
           deleteTodo={deleteTodo}
+          httpStatus={httpStatus.filter((x) => x.id === item.id)}
         />
       ))}
       {/* {todoList.reduce((p, item) => {
@@ -50,10 +62,19 @@ TodoList.propTypes = {
       id: PropTypes.number,
       text: PropTypes.string,
       isDone: PropTypes.bool,
+      timeStamp: PropTypes.string,
     }),
   ).isRequired,
   toggleComplete: PropTypes.func.isRequired,
   deleteTodo: PropTypes.func.isRequired,
+  httpStatus: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string,
+      status: PropTypes.oneOf(['REQUEST', 'FAIL']),
+      id: PropTypes.number,
+      payload: PropTypes.objectOf(Error),
+    }),
+  ).isRequired,
 };
 
 export default memo(TodoList);

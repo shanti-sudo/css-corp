@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+// import AppHook from './AppHook';
 import Todo from './Pages/Todo';
 import './root.css';
+
+ReactDOM.render(<Todo />, document.getElementById('root'));
 
 // Components
 // 1. function components
@@ -38,5 +41,3 @@ import './root.css';
 //     );
 //   }
 // }
-
-ReactDOM.render(<Todo />, document.getElementById('root'));
