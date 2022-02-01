@@ -1,6 +1,9 @@
 import { ErrorActions } from './actionTypes';
 
-export default (state: any, { type, processId, error, key }: ErrorActions) => {
+export default (
+  state: any = {},
+  { type, processId, error, key }: ErrorActions,
+) => {
   const matches = /(.*)_(REQUEST|FAIL)/.exec(type);
   if (matches) {
     const id = processId ? `_${processId}` : '';

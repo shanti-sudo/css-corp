@@ -1,6 +1,6 @@
 import { LoadingActions } from './actionTypes';
 
-export default (state: any, { type, processId }: LoadingActions) => {
+export default (state: any = {}, { type, processId }: LoadingActions) => {
   const matches = /(.*)_(REQUEST|SUCCESS|FAIL)/.exec(type);
   if (!matches) return state;
   const id = processId ? `_${processId}` : '';

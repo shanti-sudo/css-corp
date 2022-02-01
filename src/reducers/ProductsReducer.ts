@@ -14,7 +14,10 @@ export const productsInitialState = {
 
 export type ProductActionType = LoadDataSuccess | ChangeCartSuccess;
 
-export default (state: ProductReducerType, action: ProductActionType) => {
+export default (
+  state: ProductReducerType = productsInitialState,
+  action: ProductActionType,
+) => {
   switch (action.type) {
     case 'LOAD_DATA_SUCCESS':
       return { ...state, ...action.data };
