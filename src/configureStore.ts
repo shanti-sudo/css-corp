@@ -1,10 +1,11 @@
 import rootReducer from './reducers';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import logger from './middleware/logger';
 
-const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
+const middleware = [logger, thunk];
+
+const store = createStore(rootReducer, applyMiddleware(...middleware));
 
 export type RootStore = ReturnType<typeof store.getState>;
 

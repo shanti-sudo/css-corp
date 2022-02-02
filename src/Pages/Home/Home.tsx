@@ -11,7 +11,7 @@ type Props = {
 
 const Home = ({ products, loadProducts, loadCart, loading }: Props) => {
   useEffect(() => {
-    loadProducts();
+    loadProducts().then(() => {});
     loadCart();
   }, [loadProducts, loadCart]);
 
