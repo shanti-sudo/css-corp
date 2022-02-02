@@ -1,27 +1,15 @@
 import Product from 'components/Product';
-import { CartContext } from 'context/CartContext';
-import React, { useContext, useEffect } from 'react';
-import { CartResponse } from 'types/CartResponse';
+import React, { useEffect } from 'react';
 import { ProductResponse } from 'types/ProductResponse';
 
 type Props = {
   products: ProductResponse[];
-  cart: CartResponse[];
   loadProducts: () => Promise<void>;
   loadCart: () => Promise<void>;
+  loading: any;
 };
 
-const Home = ({ products, cart, loadProducts, loadCart }: Props) => {
-  const {
-    loadData,
-    handleCart,
-    updateCartItem,
-    deleteCartItem,
-    // products,
-    // cart,
-    loading,
-  } = useContext(CartContext);
-
+const Home = ({ products, loadProducts, loadCart, loading }: Props) => {
   useEffect(() => {
     loadProducts();
     loadCart();
@@ -35,23 +23,7 @@ const Home = ({ products, cart, loadProducts, loadCart }: Props) => {
         </div>
       )}
       {products.map((product) => {
-        const cartItem = cart.find((x) => x.productId === product.id);
-        const addLoading = !!loading[`ADD_CART_${product.id}`];
-        const updateLoading = !!loading[`UPDATE_CART_${product.id}`];
-        const deleteLoading = !!loading[`DELETE_CART_${product.id}`];
-        return (
-          <Product
-            key={product.id}
-            handleCart={handleCart}
-            cartItem={cartItem}
-            updateCartItem={updateCartItem}
-            deleteCartItem={deleteCartItem}
-            addLoading={addLoading}
-            updateLoading={updateLoading}
-            deleteLoading={deleteLoading}
-            {...product}
-          />
-        );
+        return <Product key={product.id} {...product} />;
       })}
     </>
   );

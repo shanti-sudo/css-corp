@@ -4,9 +4,9 @@ import { ProductResponse } from 'types/ProductResponse';
 import Rating from 'components/Rating';
 import { CartResponse } from 'types/CartResponse';
 
-type Props = {
+export type ProductProps = {
   cartItem: CartResponse | undefined;
-  handleCart: (productId: number) => void;
+  addCart: (productId: number) => void;
   updateCartItem: (cartItem: CartResponse) => void;
   deleteCartItem: (cartItem: CartResponse) => void;
   addLoading: boolean;
@@ -22,14 +22,14 @@ const Product = ({
   category,
   image,
   rating,
-  handleCart,
+  addCart,
   cartItem,
   updateCartItem,
   deleteCartItem,
   addLoading,
   updateLoading,
   deleteLoading,
-}: Props) => {
+}: ProductProps) => {
   console.log(id);
 
   return (
@@ -96,7 +96,7 @@ const Product = ({
                 type="button"
                 disabled={addLoading}
                 className="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-indigo-700 disabled:bg-gray-500"
-                onClick={() => handleCart(id)}
+                onClick={() => addCart(id)}
               >
                 Add to bag
               </button>

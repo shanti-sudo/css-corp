@@ -272,7 +272,7 @@
   ],
   "cart": [
     {
-      "quantity": 7,
+      "quantity": 1,
       "productId": 2,
       "id": 2
     },
@@ -292,7 +292,7 @@
       "id": 6
     },
     {
-      "quantity": 1,
+      "quantity": 5,
       "productId": 1,
       "id": 7
     }

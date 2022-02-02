@@ -1,10 +1,9 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, memo, useContext } from 'react';
 import cn from 'classnames';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { MenuIcon, XIcon, ShoppingBagIcon } from '@heroicons/react/outline';
 import { AuthContext } from 'context/authContext';
 import { Navigate, useLocation, Outlet } from 'react-router-dom';
-import { CartContext } from 'context/CartContext';
 import SnackBar from 'components/SnackBar';
 
 const navigation = [
@@ -14,9 +13,13 @@ const navigation = [
   { name: 'Calendar', href: '#', current: false },
 ];
 
-interface Props {}
+type Props = {
+  quantity: number;
+  error: any;
+  clearError: (key: string) => any;
+};
 
-const MainLayout = (props: Props) => {
+const MainLayout = ({ quantity, error, clearError }: Props) => {
   const { onLogout, user } = useContext(AuthContext);
   const location = useLocation();
 
@@ -76,24 +79,15 @@ const MainLayout = (props: Props) => {
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <CartContext.Consumer>
-                    {({ cart }) => (
-                      <>
-                        <button
-                          type="button"
-                          className="flex items-center bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                        >
-                          <ShoppingBagIcon
-                            className="h-6 w-6"
-                            aria-hidden="true"
-                          />
-                          <span className="mx-2">
-                            {cart.reduce((p, c) => p + c.quantity, 0)}
-                          </span>
-                        </button>
-                      </>
-                    )}
-                  </CartContext.Consumer>
+                  <>
+                    <button
+                      type="button"
+                      className="flex items-center bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                    >
+                      <ShoppingBagIcon className="h-6 w-6" aria-hidden="true" />
+                      <span className="mx-2">{quantity}</span>
+                    </button>
+                  </>
 
                   {/* Profile dropdown */}
                   <Menu as="div" className="ml-3 relative">
@@ -194,37 +188,30 @@ const MainLayout = (props: Props) => {
         )}
       </Disclosure>
       <Outlet />
-      <CartContext.Consumer>
-        {({ error, clearError }) => {
-          return (
-            <>
-              {Object.keys(error)
-                .slice(0, 3)
-                .map((x, index) => {
-                  const title = x
-                    .replace(/_\d+/g, '')
-                    .split('_')
-                    .map(
-                      (x) => `${x[0].toUpperCase()}${x.slice(1).toLowerCase()}`,
-                    )
-                    .join(' ');
+      <>
+        {Object.keys(error)
+          .slice(0, 3)
+          .map((x, index) => {
+            const title = x
+              .replace(/_\d+/g, '')
+              .split('_')
+              .map((x) => `${x[0].toUpperCase()}${x.slice(1).toLowerCase()}`)
+              .join(' ');
 
-                  return (
-                    <SnackBar
-                      key={x}
-                      index={index}
-                      title={title}
-                      message={error[x].message}
-                      onCancel={() => clearError(x)}
-                    />
-                  );
-                })}
-            </>
-          );
-        }}
-      </CartContext.Consumer>
+            return (
+              <SnackBar
+                key={x}
+                index={index}
+                title={title}
+                message={error[x].message}
+                onCancel={() => clearError(x)}
+              />
+            );
+          })}
+      </>
+      );
     </div>
   );
 };
 
-export default MainLayout;
+export default memo(MainLayout);

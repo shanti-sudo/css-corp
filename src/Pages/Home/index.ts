@@ -7,7 +7,7 @@ import Home from './Home';
 const mapStoreToProps = (store: RootStore) => {
   return {
     products: store.products,
-    cart: store.cart,
+    loading: store.loading,
   };
 };
 
