@@ -2,11 +2,11 @@ import { combineReducers } from 'redux';
 import products from './ProductsReducer';
 import error from './ErrorReducer';
 import loading from './LoadingReducer';
-import user from './userReducer';
+import cart from './CartReducer';
 
 export default combineReducers({
   products,
   error,
   loading,
-  user,
+  cart,
 });

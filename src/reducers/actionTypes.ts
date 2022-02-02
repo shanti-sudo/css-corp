@@ -1,10 +1,11 @@
 import { User } from 'types/authResponse';
 import { CartResponse } from 'types/CartResponse';
-import { ProductReducerType } from './ProductsReducer';
+import { ProductResponse } from 'types/ProductResponse';
 
 export type LoadingActions = {
   type:
-    | 'LOAD_DATA_REQUEST'
+    | 'LOAD_PRODUCTS_REQUEST'
+    | 'LOAD_CART_REQUEST'
     | 'ADD_CART_REQUEST'
     | 'UPDATE_CART_REQUEST'
     | 'DELETE_CART_REQUEST';
@@ -13,7 +14,8 @@ export type LoadingActions = {
 
 export type ErrorActions = {
   type:
-    | 'LOAD_DATA_FAIL'
+    | 'LOAD_PRODUCTS_FAIL'
+    | 'LOAD_CART_FAIL'
     | 'ADD_CART_FAIL'
     | 'UPDATE_CART_FAIL'
     | 'DELETE_CART_FAIL'
@@ -23,9 +25,15 @@ export type ErrorActions = {
   key?: string;
 };
 
-export type LoadDataSuccess = {
-  type: 'LOAD_DATA_SUCCESS';
-  data: Omit<ProductReducerType, 'loading'>;
+export type LoadProductsSuccess = {
+  type: 'LOAD_PRODUCTS_SUCCESS';
+  data: ProductResponse[];
+  processId?: number;
+};
+
+export type LoadCartSuccess = {
+  type: 'LOAD_CART_SUCCESS';
+  data: CartResponse[];
   processId?: number;
 };
 
@@ -35,9 +43,11 @@ export type ChangeCartSuccess = {
   processId: number;
 };
 
+export type CartActions = LoadCartSuccess | ChangeCartSuccess;
+
 export type RootState = {
-  products: ProductReducerType;
-  user: User;
+  products: ProductResponse[];
+  cart: CartResponse[];
   error: any;
   loading: any;
 };
@@ -49,5 +59,5 @@ export type UserActionType = {
 export type RootAction =
   | LoadingActions
   | ErrorActions
-  | LoadDataSuccess
-  | ChangeCartSuccess;
+  | LoadProductsSuccess
+  | CartActions;

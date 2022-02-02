@@ -1,31 +1,27 @@
 import {
+  CartActions,
   ErrorActions,
   LoadingActions,
+  LoadProductsSuccess,
   RootAction,
   RootState,
-  UserActionType,
 } from './actionTypes';
+import CartReducer from './CartReducer';
 import ErrorReducer from './ErrorReducer';
 import LoadingReducer from './LoadingReducer';
-import ProductsReducer, {
-  ProductActionType,
-  productsInitialState,
-} from './ProductsReducer';
-import userReducer from './userReducer';
-
-const initialState = {};
+import ProductsReducer from './ProductsReducer';
 
 export const RootInitialState = {
-  products: productsInitialState,
-  user: null,
+  products: [],
+  cart: [],
   error: {},
   loading: {},
 };
 
 export default (state: RootState, action: RootAction) => {
   return {
-    // user: userReducer(state.user, action as UserActionType),
-    products: ProductsReducer(state.products, action as ProductActionType),
+    cart: CartReducer(state.cart, action as CartActions),
+    products: ProductsReducer(state.products, action as LoadProductsSuccess),
     error: ErrorReducer(state.error, action as ErrorActions),
     loading: LoadingReducer(state.loading, action as LoadingActions),
   };

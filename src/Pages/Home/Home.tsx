@@ -1,22 +1,31 @@
 import Product from 'components/Product';
 import { CartContext } from 'context/CartContext';
 import React, { useContext, useEffect } from 'react';
+import { CartResponse } from 'types/CartResponse';
+import { ProductResponse } from 'types/ProductResponse';
 
-interface Props {}
+type Props = {
+  products: ProductResponse[];
+  cart: CartResponse[];
+  loadProducts: () => Promise<void>;
+  loadCart: () => Promise<void>;
+};
 
-const Home = (props: Props) => {
+const Home = ({ products, cart, loadProducts, loadCart }: Props) => {
   const {
     loadData,
     handleCart,
     updateCartItem,
     deleteCartItem,
-    products: { products, cart },
+    // products,
+    // cart,
     loading,
   } = useContext(CartContext);
 
   useEffect(() => {
-    loadData();
-  }, [loadData]);
+    loadProducts();
+    loadCart();
+  }, [loadProducts, loadCart]);
 
   return (
     <>

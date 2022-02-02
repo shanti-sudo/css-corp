@@ -290,6 +290,11 @@
       "quantity": 1,
       "productId": 15,
       "id": 6
+    },
+    {
+      "quantity": 1,
+      "productId": 1,
+      "id": 7
     }
   ]
 }

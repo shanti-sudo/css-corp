@@ -1,7 +1,6 @@
 import useError from 'hooks/useError';
 import React, { createContext, useCallback, useMemo, useReducer } from 'react';
 import ProductsReducer, {
-  ProductReducerType,
   productsInitialState,
 } from 'reducers/ProductsReducer';
 import rootReducer, { RootInitialState } from 'reducers/rootReducer';
@@ -11,7 +10,8 @@ import { ProductResponse } from 'types/ProductResponse';
 import axiosInstance from 'utils/axios';
 
 type CartContextType = {
-  products: ProductReducerType;
+  products: ProductResponse[];
+  cart: CartResponse[];
   loading: any;
   error: any;
   loadData: () => Promise<void>;
@@ -26,33 +26,45 @@ export const CartContext = createContext<CartContextType>(
 );
 
 export const CartProvider = ({ children }: ProviderProps) => {
-  const [{ products, loading, error }, dispatch] = useReducer(
+  const [{ products, cart, loading, error }, dispatch] = useReducer(
     rootReducer,
     RootInitialState,
   );
 
-  const handleError = useError();
-
-  const loadData = useCallback(async () => {
+  const loadProducts = useCallback(async () => {
     try {
       dispatch({
-        type: 'LOAD_DATA_REQUEST',
+        type: 'LOAD_PRODUCTS_REQUEST',
       });
-      const res = await Promise.all([
-        axiosInstance.get<ProductResponse[]>('660/products'),
-        axiosInstance.get<CartResponse[]>('660/cart'),
-      ]);
+      const res = await axiosInstance.get<ProductResponse[]>('660/products');
       dispatch({
-        type: 'LOAD_DATA_SUCCESS',
-        data: { cart: res[1].data, products: res[0].data },
+        type: 'LOAD_PRODUCTS_SUCCESS',
+        data: res.data,
       });
     } catch (error) {
-      console.log('error', error);
-
-      dispatch({ type: 'LOAD_DATA_FAIL', error: error as Error });
-      handleError(error);
+      dispatch({ type: 'LOAD_PRODUCTS_FAIL', error: error as Error });
     }
-  }, [handleError]);
+  }, []);
+
+  const loadCart = useCallback(async () => {
+    try {
+      dispatch({
+        type: 'LOAD_CART_REQUEST',
+      });
+      const res = await axiosInstance.get<CartResponse[]>('660/cart');
+      dispatch({
+        type: 'LOAD_CART_SUCCESS',
+        data: res.data,
+      });
+    } catch (error) {
+      dispatch({ type: 'LOAD_CART_FAIL', error: error as Error });
+    }
+  }, []);
+
+  const loadData = useCallback(async () => {
+    loadProducts();
+    loadCart();
+  }, [loadProducts, loadCart]);
 
   const handleCart = useCallback(async (productId) => {
     try {
@@ -138,6 +150,7 @@ export const CartProvider = ({ children }: ProviderProps) => {
   const value = useMemo(
     () => ({
       products,
+      cart,
       loadData,
       handleCart,
       updateCartItem,
@@ -148,6 +161,7 @@ export const CartProvider = ({ children }: ProviderProps) => {
     }),
     [
       products,
+      cart,
       loadData,
       handleCart,
       updateCartItem,
