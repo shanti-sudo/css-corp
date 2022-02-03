@@ -18,7 +18,8 @@
           "context": "./src/context",
           "hooks": "./src/hooks",
           "reducers": "./src/reducers",
-          "actions": "./src/actions"
+          "actions": "./src/actions",
+          "sagas": "./src/sagas"
         }
       }
     ],

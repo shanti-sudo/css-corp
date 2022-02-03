@@ -4,14 +4,14 @@ import { ProductResponse } from 'types/ProductResponse';
 
 type Props = {
   products: ProductResponse[];
-  loadProducts: () => Promise<void>;
-  loadCart: () => Promise<void>;
+  loadProducts: () => void;
+  loadCart: () => void;
   loading: any;
 };
 
 const Home = ({ products, loadProducts, loadCart, loading }: Props) => {
   useEffect(() => {
-    loadProducts().then(() => {});
+    loadProducts();
     loadCart();
   }, [loadProducts, loadCart]);
 

@@ -1,6 +1,7 @@
 import { addCart, deleteCartItem, updateCartItem } from 'actions/cartActions';
 import { AppDispatch, RootStore } from 'configureStore';
 import { connect } from 'react-redux';
+import { addCartItemRequest } from 'reducers/actionTypes';
 import { CartResponse } from 'types/CartResponse';
 import { ProductResponse } from 'types/ProductResponse';
 import Product from './Product';
@@ -16,7 +17,7 @@ const mapStoreToProps = (store: RootStore, props: ProductResponse) => {
 
 const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
-    addCart: (productId: number) => addCart(productId)(dispatch),
+    addCart: (productId: number) => dispatch(addCartItemRequest(productId)),
     updateCartItem: (cartItem: CartResponse) =>
       updateCartItem(cartItem)(dispatch),
     deleteCartItem: (cartItem: CartResponse) =>

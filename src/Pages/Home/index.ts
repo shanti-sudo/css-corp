@@ -2,6 +2,7 @@ import { loadCart } from 'actions/cartActions';
 import { loadProducts } from 'actions/productsAction';
 import { AppDispatch, RootStore } from 'configureStore';
 import { connect } from 'react-redux';
+import { loadCartRequest, loadProductsRequest } from 'reducers/actionTypes';
 import Home from './Home';
 
 const mapStoreToProps = (store: RootStore) => {
@@ -13,8 +14,8 @@ const mapStoreToProps = (store: RootStore) => {
 
 const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
-    loadProducts: () => loadProducts()(dispatch),
-    loadCart: () => loadCart()(dispatch),
+    loadProducts: () => dispatch(loadProductsRequest()),
+    loadCart: () => dispatch(loadCartRequest()),
   };
 };
 

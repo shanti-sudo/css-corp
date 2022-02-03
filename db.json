@@ -295,6 +295,30 @@
       "quantity": 1,
       "productId": 5,
       "id": 8
+    },
+    {
+      "quantity": 1,
+      "productId": {
+        "type": "ADD_CART_REQUEST",
+        "processId": 1
+      },
+      "id": 9
+    },
+    {
+      "quantity": 1,
+      "productId": {
+        "type": "ADD_CART_REQUEST",
+        "processId": 1
+      },
+      "id": 10
+    },
+    {
+      "quantity": 1,
+      "productId": {
+        "type": "ADD_CART_REQUEST",
+        "processId": 1
+      },
+      "id": 11
     }
   ]
 }
