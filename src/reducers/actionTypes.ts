@@ -1,8 +1,13 @@
+import { FormikHelpers } from 'formik';
+import { LoginInitValuesProps } from 'Pages/Login/loginUtils';
+import { RegisterInitValues } from 'Pages/Register/registerIUtils';
 import {
   AddCartItemActions,
   DeleteCartItemActions,
   LoadCartActions,
   LoadProductsActions,
+  LoginActions,
+  RegisterActions,
   UpdateCartItemActions,
 } from 'types';
 import { CartResponse } from 'types/CartResponse';
@@ -14,12 +19,16 @@ export type InitialLoadActions = {
     | LoadCartActions.LOAD_CART_REQUEST;
   processId?: never;
   cartItem?: never;
+  values?: never;
+  formikHelpers?: never;
 };
 
 export type AddCartItemLoadingAction = {
   type: AddCartItemActions.ADD_CART_REQUEST;
   processId: number;
   cartItem?: never;
+  values?: never;
+  formikHelpers?: never;
 };
 
 export type ModifyCartItemLoadingAction = {
@@ -28,12 +37,32 @@ export type ModifyCartItemLoadingAction = {
     | DeleteCartItemActions.DELETE_CART_REQUEST;
   processId: number;
   cartItem: CartResponse;
+  values?: never;
+  formikHelpers?: never;
+};
+
+export type LoginLoadingActionType = {
+  type: LoginActions.LOGIN_REQUEST;
+  values: LoginInitValuesProps;
+  formikHelpers: FormikHelpers<LoginInitValuesProps>;
+  processId?: never;
+  cartItem?: never;
+};
+
+export type RegisterLoadingActionType = {
+  type: RegisterActions.REGISTER_REQUEST;
+  values: RegisterInitValues;
+  formikHelpers: FormikHelpers<RegisterInitValues>;
+  processId?: never;
+  cartItem?: never;
 };
 
 export type LoadingActions =
   | InitialLoadActions
   | AddCartItemLoadingAction
-  | ModifyCartItemLoadingAction;
+  | ModifyCartItemLoadingAction
+  | LoginLoadingActionType
+  | RegisterLoadingActionType;
 
 export type InitialLoadErrorActions = {
   type: LoadProductsActions.LOAD_PRODUCTS_FAIL | LoadCartActions.LOAD_CART_FAIL;
