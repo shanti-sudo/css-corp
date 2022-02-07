@@ -8,39 +8,72 @@ import {
 import { CartResponse } from 'types/CartResponse';
 import { ProductResponse } from 'types/ProductResponse';
 
-export type LoadingActions = {
+export type InitialLoadActions = {
   type:
     | LoadProductsActions.LOAD_PRODUCTS_REQUEST
-    | LoadCartActions.LOAD_CART_REQUEST
-    | AddCartItemActions.ADD_CART_REQUEST
-    | UpdateCartItemActions.UPDATE_CART_REQUEST
-    | DeleteCartItemActions.DELETE_CART_REQUEST;
-  processId?: number;
+    | LoadCartActions.LOAD_CART_REQUEST;
+  processId?: never;
+  cartItem?: never;
 };
 
-export type ErrorActions = {
+export type AddCartItemLoadingAction = {
+  type: AddCartItemActions.ADD_CART_REQUEST;
+  processId: number;
+  cartItem?: never;
+};
+
+export type ModifyCartItemLoadingAction = {
   type:
-    | LoadProductsActions.LOAD_PRODUCTS_FAIL
-    | LoadCartActions.LOAD_CART_FAIL
+    | UpdateCartItemActions.UPDATE_CART_REQUEST
+    | DeleteCartItemActions.DELETE_CART_REQUEST;
+  processId: number;
+  cartItem: CartResponse;
+};
+
+export type LoadingActions =
+  | InitialLoadActions
+  | AddCartItemLoadingAction
+  | ModifyCartItemLoadingAction;
+
+export type InitialLoadErrorActions = {
+  type: LoadProductsActions.LOAD_PRODUCTS_FAIL | LoadCartActions.LOAD_CART_FAIL;
+  processId?: never;
+  key?: never;
+  error: Error;
+};
+
+export type CartItemErrorActions = {
+  type:
     | AddCartItemActions.ADD_CART_FAIL
     | UpdateCartItemActions.UPDATE_CART_FAIL
-    | DeleteCartItemActions.DELETE_CART_FAIL
-    | 'CLEAR_ERROR';
-  processId?: number;
+    | DeleteCartItemActions.DELETE_CART_FAIL;
+  processId: number;
   error: Error;
-  key?: string;
+  key?: never;
 };
+
+export type ClearErrorAction = {
+  type: 'CLEAR_ERROR';
+  key: string;
+  error?: never;
+  processId?: never;
+};
+
+export type ErrorActions =
+  | InitialLoadErrorActions
+  | CartItemErrorActions
+  | ClearErrorAction;
 
 export type LoadProductsSuccess = {
   type: LoadProductsActions.LOAD_PRODUCTS_SUCCESS;
   data: ProductResponse[];
-  processId?: number;
+  processId?: never;
 };
 
 export type LoadCartSuccess = {
   type: LoadCartActions.LOAD_CART_SUCCESS;
   data: CartResponse[];
-  processId?: number;
+  processId?: never;
 };
 
 export type ChangeCartSuccess = {
@@ -71,11 +104,11 @@ export type RootAction =
   | LoadProductsSuccess
   | CartActions;
 
-export const loadProductsRequest = (): LoadingActions => ({
+export const loadProductsRequest = (): InitialLoadActions => ({
   type: LoadProductsActions.LOAD_PRODUCTS_REQUEST,
 });
 
-export const loadCartRequest = (): LoadingActions => ({
+export const loadCartRequest = (): InitialLoadActions => ({
   type: LoadCartActions.LOAD_CART_REQUEST,
 });
 
@@ -109,6 +142,7 @@ export const updateCartItemRequest = (
   cartItem: CartResponse,
 ): LoadingActions => ({
   type: UpdateCartItemActions.UPDATE_CART_REQUEST,
+  cartItem: cartItem,
   processId: cartItem.productId,
 });
 
@@ -124,8 +158,17 @@ export const updateCartItemSuccess = (
 export const updateCartItemFail = (
   error: Error,
   processId: number,
-): ErrorActions => ({
+): CartItemErrorActions => ({
   type: UpdateCartItemActions.UPDATE_CART_FAIL,
+  error,
+  processId,
+});
+
+export const deleteCartItemFail = (
+  error: Error,
+  processId: number,
+): CartItemErrorActions => ({
+  type: DeleteCartItemActions.DELETE_CART_FAIL,
   error,
   processId,
 });
@@ -133,18 +176,35 @@ export const updateCartItemFail = (
 export const addCartItemError = (
   error: Error,
   processId: number,
-): ErrorActions => ({
+): CartItemErrorActions => ({
   type: AddCartItemActions.ADD_CART_FAIL,
   error,
   processId,
 });
 
-export const loadProductsFail = (error: Error): ErrorActions => ({
+export const loadProductsFail = (error: Error): InitialLoadErrorActions => ({
   type: LoadProductsActions.LOAD_PRODUCTS_FAIL,
   error,
 });
 
-export const loadCartFail = (error: Error): ErrorActions => ({
+export const loadCartFail = (error: Error): InitialLoadErrorActions => ({
   type: LoadCartActions.LOAD_CART_FAIL,
   error,
+});
+
+export const deleteCartItemRequest = (
+  cartItem: CartResponse,
+): ModifyCartItemLoadingAction => ({
+  type: DeleteCartItemActions.DELETE_CART_REQUEST,
+  cartItem: cartItem,
+  processId: cartItem.productId,
+});
+
+export const deleteCartItemSuccess = (
+  cartItem: CartResponse,
+  processId: number,
+): ChangeCartSuccess => ({
+  type: DeleteCartItemActions.DELETE_CART_SUCCESS,
+  cartItem,
+  processId,
 });

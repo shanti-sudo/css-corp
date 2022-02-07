@@ -1,5 +1,3 @@
-import { loadCart } from 'actions/cartActions';
-import { loadProducts } from 'actions/productsAction';
 import { AppDispatch, RootStore } from 'configureStore';
 import { connect } from 'react-redux';
 import { loadCartRequest, loadProductsRequest } from 'reducers/actionTypes';

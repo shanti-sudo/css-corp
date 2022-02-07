@@ -1,5 +1,5 @@
 import Product from 'components/Product';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ProductResponse } from 'types/ProductResponse';
 
 type Props = {
@@ -10,6 +10,9 @@ type Props = {
 };
 
 const Home = ({ products, loadProducts, loadCart, loading }: Props) => {
+  const [first, setfirst] = useState(() => {
+    return 'Hello';
+  });
   useEffect(() => {
     loadProducts();
     loadCart();

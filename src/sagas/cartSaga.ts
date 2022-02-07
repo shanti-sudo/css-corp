@@ -1,9 +1,13 @@
 import { AxiosResponse } from 'axios';
 import {
   addCartItemError,
+  AddCartItemLoadingAction,
   addCartItemSuccess,
+  deleteCartItemFail,
+  deleteCartItemSuccess,
   loadCartFail,
   loadCartSuccess,
+  ModifyCartItemLoadingAction,
   updateCartItemFail,
   updateCartItemSuccess,
 } from 'reducers/actionTypes';
@@ -17,6 +21,7 @@ import {
 } from 'redux-saga/effects';
 import {
   AddCartItemActions,
+  DeleteCartItemActions,
   LoadCartActions,
   UpdateCartItemActions,
 } from 'types';
@@ -35,47 +40,66 @@ function* loadCart() {
   }
 }
 
-function* addCartItem(productId: number) {
+function* addCartItem({ processId }: AddCartItemLoadingAction) {
   try {
     const res: AxiosResponse<CartResponse> = yield call(
       axiosInstance.post,
       '660/cart',
       {
         quantity: 1,
-        productId,
+        productId: processId,
       },
     );
-    yield put(addCartItemSuccess(res.data, productId));
+
+    yield put(addCartItemSuccess(res.data, processId));
   } catch (error) {
-    yield put(addCartItemError(error as Error, productId));
+    yield put(addCartItemError(error as Error, processId));
   }
 }
 
-function* updateCartItem(cartItem: CartResponse) {
+function* updateCartItem({ processId, cartItem }: ModifyCartItemLoadingAction) {
   try {
     const res: AxiosResponse<CartResponse> = yield call(
       axiosInstance.put,
       `660/cart/${cartItem.id}`,
       cartItem,
     );
-    yield put(updateCartItemSuccess(res.data, cartItem.productId));
+    yield put(updateCartItemSuccess(res.data, processId));
   } catch (error) {
-    yield put(updateCartItemFail(error as Error, cartItem.productId));
+    updateCartItemFail(error as Error, processId);
   }
 }
 
-function* loadCartRequest() {
-  yield takeEvery(LoadCartActions.LOAD_CART_REQUEST, loadCart);
+function* deleteCartItem({ processId, cartItem }: ModifyCartItemLoadingAction) {
+  try {
+    yield call(axiosInstance.delete, `660/cart/${cartItem.id}`);
+    yield put(deleteCartItemSuccess(cartItem, processId));
+  } catch (error) {
+    yield put(deleteCartItemFail(error as Error, processId));
+  }
 }
 
-function* addCartItemRequest() {
-  yield takeLatest(AddCartItemActions.ADD_CART_REQUEST, addCartItem);
+function* deleteCartItemRequest() {
+  yield takeLatest(DeleteCartItemActions.DELETE_CART_REQUEST, deleteCartItem);
 }
 
 function* updateCartItemRequest() {
   yield takeLatest(UpdateCartItemActions.UPDATE_CART_REQUEST, updateCartItem);
 }
 
+function* addCartItemRequest() {
+  yield takeLatest(AddCartItemActions.ADD_CART_REQUEST, addCartItem);
+}
+
+function* loadCartRequest() {
+  yield takeEvery(LoadCartActions.LOAD_CART_REQUEST, loadCart);
+}
+
 export default function* rootCart() {
-  yield all([fork(loadCartRequest), fork(addCartItemRequest)]);
+  yield all([
+    fork(loadCartRequest),
+    fork(addCartItemRequest),
+    fork(updateCartItemRequest),
+    fork(deleteCartItemRequest),
+  ]);
 }
