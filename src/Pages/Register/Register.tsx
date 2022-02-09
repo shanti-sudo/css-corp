@@ -5,14 +5,20 @@ import {
   RegisterInitValues,
   registerInitValues,
 } from './registerIUtils';
-import { FormikErrors } from 'formik';
+import { FormikErrors, FormikHelpers } from 'formik';
 import { AuthContext } from 'context/authContext';
+import { RegisterLoadingActionType } from 'reducers/LoadingReducer';
 // import { axios } from 'axios';
 
-interface Props {}
+type Props = {
+  onRegister: (
+    values: RegisterInitValues,
+    formikHelpers: FormikHelpers<RegisterInitValues>,
+  ) => RegisterLoadingActionType;
+};
 
-const Register = (props: Props) => {
-  const { onRegister } = useContext(AuthContext);
+const Register = ({ onRegister }: Props) => {
+  //   const { onRegister } = useContext(AuthContext);
 
   const validate = useCallback((values: RegisterInitValues) => {
     const errors: FormikErrors<RegisterInitValues> = {};

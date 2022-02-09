@@ -1,38 +1,20 @@
-import React, { useContext, useMemo } from 'react';
-import { FastField } from 'formik';
-import Checkbox from 'components/Checkbox';
-import Link from 'components/Link';
-import { LoginFields, LoginInitValues } from './loginUtils';
-import CustomForm from 'components/CustomForm';
-import { AuthContext } from 'context/authContext';
+import { AppDispatch, RootStore } from 'configureStore';
+import { LOGIN_REQUEST } from 'constants/actionTypes';
+import { FormikHelpers } from 'formik';
+import { connect } from 'react-redux';
+import { loginRequest } from 'reducers/LoadingReducer';
+import Login from './Login';
+import { LoginInitValuesProps } from './loginUtils';
 
-interface Props {}
+// get data from store and add Props
+const mapStateToProps = (state: RootStore) => ({});
 
-const Login = (props: Props) => {
-  const { onLogin } = useContext(AuthContext);
+// set date to store
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  onLogin: (
+    values: LoginInitValuesProps,
+    formikHelpers: FormikHelpers<LoginInitValuesProps>,
+  ) => dispatch(loginRequest(values, formikHelpers)),
+});
 
-  const btnProps = useMemo(
-    () => ({
-      children: 'Sign In',
-    }),
-    [],
-  );
-
-  return (
-    <CustomForm
-      initialValues={LoginInitValues}
-      fields={LoginFields}
-      onSubmit={onLogin}
-      btnProps={btnProps}
-    >
-      <div className="flex items-center justify-between">
-        <FastField name="remember_me" component={Checkbox}>
-          Remember Me
-        </FastField>
-        <Link href="#">Forgot password?</Link>
-      </div>
-    </CustomForm>
-  );
-};
-
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,6 +1,6 @@
 import { AppDispatch, RootStore } from 'configureStore';
 import { connect } from 'react-redux';
-import { loadCartRequest, loadProductsRequest } from 'reducers/actionTypes';
+import { loadCartRequest, loadProductsRequest } from 'reducers/LoadingReducer';
 import Home from './Home';
 
 const mapStoreToProps = (store: RootStore) => {

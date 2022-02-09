@@ -1,16 +1,27 @@
 import { AxiosResponse } from 'axios';
 import {
-  addCartItemError,
-  AddCartItemLoadingAction,
+  ADD_CART_REQUEST,
+  DELETE_CART_REQUEST,
+  LOAD_CART_REQUEST,
+  UPDATE_CART_REQUEST,
+} from 'constants/actionTypes';
+import {
   addCartItemSuccess,
-  deleteCartItemFail,
   deleteCartItemSuccess,
-  loadCartFail,
   loadCartSuccess,
-  ModifyCartItemLoadingAction,
-  updateCartItemFail,
   updateCartItemSuccess,
-} from 'reducers/actionTypes';
+} from 'reducers/CartReducer';
+import {
+  addCartItemError,
+  deleteCartItemFail,
+  loadCartFail,
+  updateCartItemFail,
+} from 'reducers/ErrorReducer';
+import {
+  AddCartItemLoadingAction,
+  ModifyCartItemLoadingAction,
+} from 'reducers/LoadingReducer';
+
 import {
   all,
   call,
@@ -19,12 +30,7 @@ import {
   takeEvery,
   takeLatest,
 } from 'redux-saga/effects';
-import {
-  AddCartItemActions,
-  DeleteCartItemActions,
-  LoadCartActions,
-  UpdateCartItemActions,
-} from 'types';
+
 import { CartResponse } from 'types/CartResponse';
 import axiosInstance from 'utils/axios';
 
@@ -80,19 +86,19 @@ function* deleteCartItem({ processId, cartItem }: ModifyCartItemLoadingAction) {
 }
 
 function* deleteCartItemRequest() {
-  yield takeLatest(DeleteCartItemActions.DELETE_CART_REQUEST, deleteCartItem);
+  yield takeLatest(DELETE_CART_REQUEST, deleteCartItem);
 }
 
 function* updateCartItemRequest() {
-  yield takeLatest(UpdateCartItemActions.UPDATE_CART_REQUEST, updateCartItem);
+  yield takeLatest(UPDATE_CART_REQUEST, updateCartItem);
 }
 
 function* addCartItemRequest() {
-  yield takeLatest(AddCartItemActions.ADD_CART_REQUEST, addCartItem);
+  yield takeLatest(ADD_CART_REQUEST, addCartItem);
 }
 
 function* loadCartRequest() {
-  yield takeEvery(LoadCartActions.LOAD_CART_REQUEST, loadCart);
+  yield takeEvery(LOAD_CART_REQUEST, loadCart);
 }
 
 export default function* rootCart() {

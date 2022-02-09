@@ -1,14 +1,16 @@
 import { AuthContext } from 'context/authContext';
 import React, { memo, useContext } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { User } from 'types/authResponse';
 
-interface Props {}
+type Props = {
+  IsUserExist: boolean;
+};
 
-const AuthLayout = (props: Props) => {
-  const { user } = useContext(AuthContext);
+const AuthLayout = ({ IsUserExist }: Props) => {
   const location = useLocation();
 
-  if (user) {
+  if (IsUserExist) {
     return <Navigate to="/home" state={{ from: location }} replace />;
   }
 

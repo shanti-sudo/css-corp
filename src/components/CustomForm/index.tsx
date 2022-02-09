@@ -26,13 +26,13 @@ const CustomForm = <T extends FormikValues>({
               {errors.serverError}
             </p>
           )}
+          <input type="text" />
           <div className="rounded-md shadow-sm -space-y-px">
             {fields.map((x) => (
               <FastField key={x.name} {...x} />
             ))}
           </div>
           {children}
-
           <Button
             type="submit"
             disabled={isSubmitting || !(dirty && isValid)}

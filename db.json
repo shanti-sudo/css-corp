@@ -6,6 +6,20 @@
       "name": "yagnesh.modh@gmail.com",
       "gender": "male",
       "id": 1
+    },
+    {
+      "email": "test@test.com",
+      "password": "$2a$10$1UMtMX/8dfvyo2d5FHz/C./qgmbBHngQjtkmNZydZx0wB6im0Ajma",
+      "name": "yagnesh",
+      "gender": "male",
+      "id": 2
+    },
+    {
+      "email": "test@test1.com",
+      "password": "$2a$10$FNRtp/ogDWlf3P.juxrNzuS1iA7BCiXdpPZEIFTNs8tWuRQLHgd9K",
+      "name": "yagnesh",
+      "gender": "male",
+      "id": 3
     }
   ],
   "todo-list": [

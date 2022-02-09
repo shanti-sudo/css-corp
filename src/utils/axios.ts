@@ -14,10 +14,9 @@ axiosInstance.interceptors.request.use(
     // Do something before request is sent
     const token = sessionStorage.getItem('@app/token');
     if (token) {
-      const data: AuthResponse = JSON.parse(token);
       config.headers = {
         ...config.headers,
-        Authorization: `Bearer ${data.accessToken}`,
+        Authorization: `Bearer ${token}`,
       };
     }
     return config;

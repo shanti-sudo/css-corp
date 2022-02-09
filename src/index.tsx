@@ -13,9 +13,7 @@ import './root.css';
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
+      <App />
     </Provider>
   </BrowserRouter>,
   document.getElementById('root'),

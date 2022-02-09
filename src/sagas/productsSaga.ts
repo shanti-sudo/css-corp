@@ -1,7 +1,8 @@
 import { AxiosResponse } from 'axios';
-import { loadProductsFail, loadProductsSuccess } from 'reducers/actionTypes';
+import { LOAD_PRODUCTS_REQUEST } from 'constants/actionTypes';
+import { loadProductsFail } from 'reducers/ErrorReducer';
+import { loadProductsSuccess } from 'reducers/ProductsReducer';
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { LoadProductsActions } from 'types';
 import { ProductResponse } from 'types/ProductResponse';
 import axiosInstance from 'utils/axios';
 
@@ -18,7 +19,7 @@ function* loadProducts() {
 }
 
 function* loadProductsRequest() {
-  yield takeEvery(LoadProductsActions.LOAD_PRODUCTS_REQUEST, loadProducts);
+  yield takeEvery(LOAD_PRODUCTS_REQUEST, loadProducts);
 }
 
 export default function* rootProducts() {

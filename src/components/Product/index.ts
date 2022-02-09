@@ -5,7 +5,7 @@ import {
   addCartItemRequest,
   deleteCartItemRequest,
   updateCartItemRequest,
-} from 'reducers/actionTypes';
+} from 'reducers/LoadingReducer';
 import { CartResponse } from 'types/CartResponse';
 import { ProductResponse } from 'types/ProductResponse';
 import Product from './Product';
