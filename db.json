@@ -295,5 +295,8 @@
       "productId": 1,
       "id": 3
     }
-  ]
+  ],
+  "counter": {
+    "value": 15
+  }
 }

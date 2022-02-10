@@ -15,8 +15,6 @@ const CustomForm = <T extends FormikValues>({
   btnProps,
   ...props
 }: Props<T>) => {
-  console.log('hello custom form');
-
   return (
     <Formik {...props}>
       {({ isValid, dirty, isSubmitting, errors }) => (

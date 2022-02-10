@@ -20,10 +20,14 @@
           "reducers": "./src/reducers",
           "actions": "./src/actions",
           "sagas": "./src/sagas",
-          "constants": "./src/constants"
+          "constants": "./src/constants",
+          "mobxStore": "./src/mobxStore"
         }
       }
     ],
     "@babel/plugin-transform-runtime"
-  ]
+  ],
+  "assumptions": {
+    "setPublicClassFields": false
+  }
 }
