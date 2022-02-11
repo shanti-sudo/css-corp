@@ -1,16 +1,15 @@
 import { AuthContext } from 'context/authContext';
+import { useAuthStore } from 'context/authStoreContext';
 import React, { memo, useContext } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { User } from 'types/authResponse';
 
-type Props = {
-  IsUserExist: boolean;
-};
-
-const AuthLayout = ({ IsUserExist }: Props) => {
+const AuthLayout = () => {
   const location = useLocation();
 
-  if (IsUserExist) {
+  const { userStore } = useAuthStore();
+
+  if (userStore.isAuthenticated()) {
     return <Navigate to="/home" state={{ from: location }} replace />;
   }
 

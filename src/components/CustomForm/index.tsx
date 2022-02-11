@@ -9,7 +9,7 @@ type Props<T> = {
   fields: FieldsProps<T>[];
 } & FormikConfig<T>;
 
-const CustomForm = <T extends FormikValues>({
+const CustomForm = <T extends {}>({
   fields,
   children,
   btnProps,

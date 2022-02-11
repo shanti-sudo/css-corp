@@ -1,9 +1,11 @@
-import React, { Fragment, memo, useContext } from 'react';
+import React, { Fragment } from 'react';
 import cn from 'classnames';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { MenuIcon, XIcon, ShoppingBagIcon } from '@heroicons/react/outline';
 import { Navigate, useLocation, Outlet } from 'react-router-dom';
 import SnackBar from 'components/SnackBar';
+import { observer } from 'mobx-react';
+import { useAuthStore } from 'context/authStoreContext';
 
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
@@ -16,20 +18,14 @@ type Props = {
   quantity: number;
   error: any;
   clearError: (key: string) => any;
-  IsUserExist: boolean;
-  onLogout: () => void;
 };
 
-const MainLayout = ({
-  quantity,
-  error,
-  clearError,
-  IsUserExist,
-  onLogout,
-}: Props) => {
+const MainLayout = ({ quantity, error, clearError }: Props) => {
   const location = useLocation();
 
-  if (!IsUserExist) {
+  const { userStore } = useAuthStore();
+
+  if (!userStore.isAuthenticated()) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 
@@ -151,7 +147,7 @@ const MainLayout = ({
                           {({ active }) => (
                             <a
                               role="button"
-                              onClick={onLogout}
+                              onClick={userStore.onLogout}
                               className={cn(
                                 'block px-4 py-2 text-sm text-gray-700',
                                 {
@@ -220,4 +216,4 @@ const MainLayout = ({
   );
 };
 
-export default memo(MainLayout);
+export default observer(MainLayout);

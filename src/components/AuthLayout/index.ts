@@ -1,12 +1,15 @@
-import { RootStore } from 'configureStore';
-import { connect } from 'react-redux';
-import { RootState } from 'reducers/actionTypes';
+import { observer } from 'mobx-react-lite';
 import AuthLayout from './AuthLayout';
 
-const mapStateToProps = (state: RootStore) => ({
-  IsUserExist: 'id' in state.user,
-});
+export default observer(AuthLayout);
+// import { RootStore } from 'configureStore';
+// import { connect } from 'react-redux';
+// import { RootState } from 'reducers/actionTypes';
 
-const mapDispatchToProps = {};
+// const mapStateToProps = (state: RootStore) => ({
+//   IsUserExist: 'id' in state.user,
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthLayout);
+// const mapDispatchToProps = {};
+
+// export default connect(mapStateToProps, mapDispatchToProps)(AuthLayout);

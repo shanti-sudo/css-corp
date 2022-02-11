@@ -6,15 +6,74 @@ import store from './configureStore';
 import App from './App';
 import './root.css';
 import { configure } from 'mobx';
+import { AuthStoreProvider } from 'context/authStoreContext';
+// import { observer, useLocalObservable } from 'mobx-react';
 
 configure({ enforceActions: 'always' });
 
+// class CounterStore {
+//   counter = 0;
+
+//   constructor() {
+//     makeAutoObservable(this);
+//   }
+
+//   increment() {
+//     this.counter++;
+//   }
+
+//   decrement() {
+//     this.counter--;
+//   }
+// }
+
+// const counterStore = {
+//   counter: 0,
+//   increment() {
+//     this.counter++;
+//   },
+//   decrement() {
+//     this.counter--;
+//   },
+// };
+
+// const App = observer(() => {
+//   const { counter, increment, decrement } = useLocalObservable(
+//     () => counterStore,
+//   );
+
+//   // const [counter, setCounter] = useState(0);
+//   // const increment = () => {
+//   //   setCounter((val) => val + 1);
+//   // };
+//   // const decrement = () => {
+//   //   setCounter((val) => val - 1);
+//   // };
+
+//   return (
+//     <div>
+//       <h1>Counter</h1>
+//       <button type="button" onClick={increment}>
+//         +
+//       </button>
+//       {counter}
+//       <button type="button" onClick={decrement}>
+//         -
+//       </button>
+//     </div>
+//   );
+// });
+
 const root = document.getElementById('root');
+
+// ReactDOM.render(<App />, root);
 
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      <App />
+      <AuthStoreProvider>
+        <App />
+      </AuthStoreProvider>
     </Provider>
   </BrowserRouter>,
   root,

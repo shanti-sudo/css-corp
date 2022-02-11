@@ -1,26 +1,16 @@
-import React, { useContext, useMemo } from 'react';
-import { FastField, FormikHelpers } from 'formik';
+import React, { memo, useMemo } from 'react';
+import { FastField } from 'formik';
 import Checkbox from 'components/Checkbox';
 import Link from 'components/Link';
-import {
-  LoginFields,
-  LoginInitValues,
-  LoginInitValuesProps,
-} from './loginUtils';
+import { LoginFields, LoginInitValues } from './loginUtils';
 import CustomForm from 'components/CustomForm';
-import User from 'mobxStore/user';
-import { toJS } from 'mobx';
-
-const user = new User();
-
-type Props = {
-  // onLogin: (
-  //   values: LoginInitValuesProps,
-  //   formikHelpers: FormikHelpers<LoginInitValuesProps>,
-  // ) => void;
-};
+import { useAuthStore } from 'context/authStoreContext';
 
 const Login = ({}: Props) => {
+  const { userStore, loadingStore } = useAuthStore();
+
+  const isLoginInProcess = loadingStore.isLoading(['login', 'register']);
+
   const btnProps = useMemo(
     () => ({
       children: 'Sign In',
@@ -28,20 +18,11 @@ const Login = ({}: Props) => {
     [],
   );
 
-  console.log(toJS(user.user));
-
-  const onLogin = async (
-    values: LoginInitValuesProps,
-    action: FormikHelpers<LoginInitValuesProps>,
-  ) => {
-    await user.onLogin(values, action);
-  };
-
   return (
     <CustomForm
       initialValues={LoginInitValues}
       fields={LoginFields}
-      onSubmit={onLogin}
+      onSubmit={userStore.onLogin}
       btnProps={btnProps}
     >
       <div className="flex items-center justify-between">
