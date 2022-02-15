@@ -3,12 +3,11 @@ export type RatingType = {
   count: number;
 };
 
-export enum ProductCategory {
-  MensClothing = "men's clothing",
-  Jewelry = 'jewelry',
-  Electronics = 'electronics',
-  WomansClothing = "women's clothing",
-}
+export type ProductCategory =
+  | "men's clothing"
+  | 'jewelry'
+  | 'electronics'
+  | "women's clothing";
 
 export type ProductResponse = {
   id: number;

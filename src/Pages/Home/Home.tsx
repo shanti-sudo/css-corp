@@ -10,9 +10,8 @@ type Props = {
 };
 
 const Home = ({ products, loadProducts, loadCart, loading }: Props) => {
-  const [first, setfirst] = useState(() => {
-    return 'Hello';
-  });
+  console.log(loading);
+
   useEffect(() => {
     loadProducts();
     loadCart();
@@ -20,7 +19,7 @@ const Home = ({ products, loadProducts, loadCart, loading }: Props) => {
 
   return (
     <>
-      {loading['LOAD_DATA'] && (
+      {(loading['LOAD_PRODUCTS'] || loading['LOAD_CART']) && (
         <div className="flex justify-center items-center h-screen w-full absolute z-10 bg-gray-600 opacity-60">
           <h1 className="text-white text-4xl">Loading...</h1>
         </div>
