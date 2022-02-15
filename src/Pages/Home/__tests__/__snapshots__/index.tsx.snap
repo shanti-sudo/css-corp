@@ -1,17 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test Home Page should take snapshot 1`] = `
-<div
-  class="flex justify-center items-center h-screen w-full absolute z-10 bg-gray-600 opacity-60"
->
-  <h1
-    class="text-white text-4xl"
-  >
-    Loading...
-  </h1>
-</div>
-`;
-
 exports[`Test Home Page should take snapshot of loading 1`] = `
 <div
   class="flex justify-center items-center h-screen w-full absolute z-10 bg-gray-600 opacity-60"
@@ -27,6 +15,7 @@ exports[`Test Home Page should take snapshot of loading 1`] = `
 exports[`Test Home Page should take snapshot of products 1`] = `
 <div
   class="w-full relative flex items-center bg-white px-4 pt-14 pb-8 overflow-hidden shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8"
+  data-testid="productContainer"
 >
   <div
     class="w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8"
@@ -35,9 +24,9 @@ exports[`Test Home Page should take snapshot of products 1`] = `
       class="aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-5"
     >
       <img
-        alt="DANVOUY Womens T Shirt Casual Cotton Short"
+        alt="Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops"
         class="object-center object-cover"
-        src="https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg"
+        src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
       />
     </div>
     <div
@@ -46,7 +35,7 @@ exports[`Test Home Page should take snapshot of products 1`] = `
       <h2
         class="text-2xl font-extrabold text-gray-900 sm:pr-12"
       >
-        DANVOUY Womens T Shirt Casual Cotton Short
+        Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops
       </h2>
       <section
         aria-labelledby="information-heading"
@@ -56,12 +45,12 @@ exports[`Test Home Page should take snapshot of products 1`] = `
           class="truncate"
           id="information-heading"
         >
-          95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter.
+          Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday
         </h3>
         <p
           class="text-2xl text-gray-900"
         >
-          $12.99
+          $109.95
         </p>
         <div
           class="mt-6"
@@ -132,14 +121,14 @@ exports[`Test Home Page should take snapshot of products 1`] = `
               </svg>
             </div>
             <p>
-              3.6
+              3.9
                out of 5 stars
             </p>
             <a
               class="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
               href="#"
             >
-              145
+              120
                reviews
             </a>
           </div>
@@ -152,14 +141,72 @@ exports[`Test Home Page should take snapshot of products 1`] = `
         <h3
           id="options-heading"
         >
-          women's clothing
+          men's clothing
         </h3>
-        <button
-          class="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-indigo-700 disabled:bg-gray-500"
-          type="button"
+        <div
+          class="flex items-center justify-between"
+          data-testid="modifyProduct"
         >
-          Add to bag
-        </button>
+          <select
+            class="mt-1 block w-1/2 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:bg-gray-300"
+          >
+            <option
+              value="1"
+            >
+              1
+            </option>
+            <option
+              value="2"
+            >
+              2
+            </option>
+            <option
+              value="3"
+            >
+              3
+            </option>
+            <option
+              value="4"
+            >
+              4
+            </option>
+            <option
+              value="5"
+            >
+              5
+            </option>
+            <option
+              value="6"
+            >
+              6
+            </option>
+            <option
+              value="7"
+            >
+              7
+            </option>
+            <option
+              value="8"
+            >
+              8
+            </option>
+            <option
+              value="9"
+            >
+              9
+            </option>
+            <option
+              value="10"
+            >
+              10
+            </option>
+          </select>
+          <button
+            class="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500 disabled:text-gray-400"
+          >
+            remove
+          </button>
+        </div>
       </section>
     </div>
   </div>

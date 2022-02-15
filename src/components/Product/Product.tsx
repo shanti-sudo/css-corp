@@ -33,7 +33,10 @@ const Product = ({
   console.log(id);
 
   return (
-    <div className="w-full relative flex items-center bg-white px-4 pt-14 pb-8 overflow-hidden shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
+    <div
+      data-testid="productContainer"
+      className="w-full relative flex items-center bg-white px-4 pt-14 pb-8 overflow-hidden shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8"
+    >
       <div className="w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8">
         <div className="aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-5">
           <img src={image} alt={title} className="object-center object-cover" />
@@ -65,7 +68,10 @@ const Product = ({
           <section aria-labelledby="options-heading" className="mt-10">
             <h3 id="options-heading">{category}</h3>
             {cartItem ? (
-              <div className="flex items-center justify-between">
+              <div
+                data-testid="modifyProduct"
+                className="flex items-center justify-between"
+              >
                 <select
                   disabled={updateLoading}
                   value={cartItem.quantity}
