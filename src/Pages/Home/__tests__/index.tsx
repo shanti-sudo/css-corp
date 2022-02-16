@@ -4,6 +4,7 @@ import {
   queryByRole,
   render as rtlRender,
   screen,
+  waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import Home from '../index';
@@ -117,6 +118,40 @@ describe('Test Home Page', () => {
       fireEvent.click(addToCartBtn);
       await waitForElementToBeRemoved(addToCartBtn);
       expect(addToCartBtn).not.toBeInTheDocument();
+    }
+  });
+
+  test('should delete item from cart', async () => {
+    mock.onDelete('660/cart/1').reply(200, {});
+    render(<Home />);
+    await screen.findAllByTestId('productContainer');
+    const deleteBtn = screen.queryByRole('button', {
+      name: 'remove',
+    });
+    if (deleteBtn) {
+      fireEvent.click(deleteBtn);
+      await waitForElementToBeRemoved(deleteBtn);
+      expect(deleteBtn).not.toBeInTheDocument();
+    }
+  });
+
+  test('should update item quantity', async () => {
+    mock.onPut('660/cart/1').reply(200, {
+      quantity: 5,
+      productId: 1,
+      id: 1,
+    });
+    render(<Home />);
+    await screen.findAllByTestId('productContainer');
+    const quantitySelect = screen.queryByRole('combobox');
+    expect(quantitySelect).toHaveValue('1');
+    if (quantitySelect) {
+      fireEvent.change(quantitySelect, {
+        target: {
+          value: 5,
+        },
+      });
+      await waitFor(() => expect(quantitySelect).toHaveValue('5'));
     }
   });
 });
