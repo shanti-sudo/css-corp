@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { useCallback, useEffect, useState } from "react";
+import { ParsedUrlQuery } from "querystring";
 import { TodoItem } from "../../types/todo";
 
 type Props = {
@@ -35,14 +36,16 @@ const Product = ({ todo }: Props) => {
   );
 };
 
-type Params = {
+interface Params extends ParsedUrlQuery {
   product: string;
-};
+}
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { product } = context.params;
+export const getStaticProps: GetStaticProps<Props, Params> = async (
+  context
+) => {
+  const params = context.params!;
   const res = await fetch(
-    `https://jsonplaceholder.typicode.com/todos/${product}`
+    `https://jsonplaceholder.typicode.com/todos/${params.product}`
   );
   const json: TodoItem = await res.json();
 
