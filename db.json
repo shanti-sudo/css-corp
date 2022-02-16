@@ -294,6 +294,11 @@
       "quantity": 1,
       "productId": 1,
       "id": 3
+    },
+    {
+      "quantity": 1,
+      "productId": 3,
+      "id": 4
     }
   ],
   "counter": {

@@ -56,7 +56,7 @@ describe('Test Home Page', () => {
       {
         quantity: 1,
         productId: 1,
-        id: 3,
+        id: 1,
       },
     ]);
   });
@@ -103,6 +103,11 @@ describe('Test Home Page', () => {
   });
 
   test('should click add to cart button', async () => {
+    mock.onPost('660/cart').reply(200, {
+      quantity: 1,
+      productId: 2,
+      id: 2,
+    });
     render(<Home />);
     await screen.findAllByTestId('productContainer');
     const addToCartBtn = screen.queryByRole('button', {
@@ -110,6 +115,8 @@ describe('Test Home Page', () => {
     });
     if (addToCartBtn) {
       fireEvent.click(addToCartBtn);
+      await waitForElementToBeRemoved(addToCartBtn);
+      expect(addToCartBtn).not.toBeInTheDocument();
     }
   });
 });
