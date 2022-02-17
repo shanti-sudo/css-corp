@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { GetStaticProps } from "next";
+import { GetStaticProps, GetServerSideProps } from "next";
 import { TodoItem } from "../../types/todo";
 
 type Props = {
@@ -31,7 +31,19 @@ const Products = ({ todoList }: Props) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
+// On build it will generate pre-render html
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   const res = await fetch(`https://jsonplaceholder.typicode.com/todos`);
+//   const json = await res.json();
+//   return {
+//     props: {
+//       todoList: json,
+//     }, // will be passed to the page component as props
+//   };
+// };
+
+// On Request it will generate Page
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const res = await fetch(`https://jsonplaceholder.typicode.com/todos`);
   const json = await res.json();
   return {

@@ -40,6 +40,7 @@ interface Params extends ParsedUrlQuery {
   product: string;
 }
 
+// pre-genrate HTMl file on build
 export const getStaticProps: GetStaticProps<Props, Params> = async (
   context
 ) => {
@@ -53,6 +54,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
     props: {
       todo: json,
     }, // will be passed to the page component as props
+    revalidate: 10,
   };
 };
 
