@@ -1,7 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { GetStaticProps, GetServerSideProps } from "next";
 import { TodoItem } from "../../types/todo";
 import styles from "../../styles/Login.module.css";
+import Header from "@components/Header";
+import MainLayout from "@layout/MainLayout";
 
 type Props = {
   todoList: TodoItem[];
@@ -23,16 +25,11 @@ const Products = ({ todoList }: Props) => {
   // }, [loadData]);
 
   return (
-    <div className={styles.container}>
-      <h1>Todo List</h1>
+    <div>
+      <h1 className="text-red-300">Todo List</h1>
       {todoList.map((x) => (
         <p key={x.id}>{x.title}</p>
       ))}
-      <style jsx>{`
-        h1 {
-          color: green;
-        }
-      `}</style>
     </div>
   );
 };
@@ -57,6 +54,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       todoList: json,
     }, // will be passed to the page component as props
   };
+};
+
+Products.getLayout = (page: ReactElement) => {
+  return <MainLayout>{page}</MainLayout>;
 };
 
 export default Products;
