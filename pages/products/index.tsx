@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { GetStaticProps, GetServerSideProps } from "next";
 import { TodoItem } from "../../types/todo";
+import styles from "../../styles/Login.module.css";
 
 type Props = {
   todoList: TodoItem[];
@@ -22,11 +23,16 @@ const Products = ({ todoList }: Props) => {
   // }, [loadData]);
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Todo List</h1>
       {todoList.map((x) => (
         <p key={x.id}>{x.title}</p>
       ))}
+      <style jsx>{`
+        h1 {
+          color: green;
+        }
+      `}</style>
     </div>
   );
 };
