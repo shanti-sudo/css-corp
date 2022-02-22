@@ -5,9 +5,7 @@ class MyDocument extends Document {
   render(): JSX.Element {
     return (
       <Html lang="en">
-        <Head>
-          <title>Home</title>
-        </Head>
+        <Head />
         <body>
           <Main />
           <NextScript />

@@ -10,6 +10,8 @@ type Props = {
 };
 
 const Products = ({ todoList }: Props) => {
+  console.log(process.env.NEXT_PUBLIC_API_URL);
+
   // const [todoList, setTodoList] = useState([]);
 
   // const loadData = useCallback(async () => {
@@ -47,6 +49,7 @@ const Products = ({ todoList }: Props) => {
 
 // On Request it will generate Page
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  console.log(process.env.NEXT_PUBLIC_API_URL);
   const res = await fetch(`https://jsonplaceholder.typicode.com/todos`);
   const json = await res.json();
   return {

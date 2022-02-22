@@ -1,0 +1,11 @@
+{
+  "users": [
+    {
+      "email": "yagnesh.modh@gmail.com",
+      "password": "$2a$10$hwF6ECnVAtWtcQGQfu0cYuk0Sg2UTqulfrZPucfWFNzAQVud7bqNq",
+      "name": "Yagnesh Modh",
+      "gender": "Male",
+      "id": 1
+    }
+  ]
+}
